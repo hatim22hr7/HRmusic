@@ -147,7 +147,7 @@
     <header>
         <h1 id="h-title">سكون يلامس روح الموسيقى</h1>
         <p class="subtitle" id="h-sub">تطبيق HRmusic يعيد تدوين مفهوم مشغلات الموسيقى على أندرويد بسلاسة فائقة وبدون إعلانات.</p>
-        <a href="HRmusic.apk" class="btn-apk" id="h-btn">تحميل APK</a>
+        <a href="https://archive.org/download/HRmusic/HRmusic.apk" class="btn-apk" id="h-btn">تحميل APK</a>
     </header>
 
     <section class="features">
@@ -208,7 +208,7 @@
             },
             en: {
                 lBtn: "العربية",
-                hTitle: "Silence Touches the Soul",
+                hTitle: "Touche the music Soul",
                 hSub: "HRmusic redefines music playback on Android with ultra-fluidity and zero ads.",
                 hBtn: "Download APK",
                 vT: "Smart Vinyl",
@@ -235,4 +235,15 @@
             document.getElementById('v-t').innerText = d.vT;
             document.getElementById('v-d').innerText = d.vD;
             document.getElementById('r-title').innerText = d.rTitle;
-            document.getElementById('f-dev').innerHTML = d.f
+            document.getElementById('f-dev').innerHTML = d.fDev + `<a href="https://github.com/hatim22hr7" class="dev-name">Hatim Haouar</a>`;
+            
+            const ts = document.querySelectorAll('.f-t');
+            const ds = document.querySelectorAll('.f-d');
+            d.feats.forEach((f, i) => {
+                ts[i].innerText = f.t;
+                ds[i].innerText = f.d;
+            });
+        }
+    </script>
+</body>
+</html>

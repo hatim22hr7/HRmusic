@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="app-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HRmusic - Mobile Experience</title>
+    
+    <link rel="icon" type="image/png" href="HRmusiclogo.png">
+
+    <style>
+        :root {
+            --primary-red: #ff3b30;
+            --dark-bg: #080808;
+            --glass: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-dim: #a1a1a1;
+            --star-color: #ffd700; /* لون النجوم الذهبي */
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% -10%, rgba(255, 59, 48, 0.15), transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 6%;
+            background: rgba(8, 8, 8, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0; z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo { font-weight: 800; font-size: 1.3rem; display: flex; align-items: center; gap: 8px; }
+        .logo span { color: var(--primary-red); }
+
+        .btn-lang {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        header { padding: 60px 8% 40px; text-align: center; }
+        h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 15px; background: linear-gradient(to bottom, #fff, #bbb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: var(--text-dim); font-size: 1rem; margin-bottom: 30px; }
+        .btn-apk { display: inline-block; background: var(--primary-red); color: white; padding: 16px 32px; border-radius: 16px; text-decoration: none; font-weight: 700; width: 100%; max-width: 300px; box-shadow: 0 10px 20px rgba(255, 59, 48, 0.3); text-align: center; }
+
+        .features { padding: 40px 6%; display: flex; flex-direction: column; gap: 20px; }
+        .card { background: var(--glass); border: 1px solid var(--border); padding: 25px; border-radius: 20px; }
+        .card h3 { color: var(--primary-red); margin-bottom: 10px; font-size: 1.2rem; }
+        .card p { color: var(--text-dim); font-size: 0.9rem; }
+
+        .vinyl-section { padding: 60px 6%; text-align: center; }
+        .vinyl-record { width: 180px; height: 180px; background: #111; border-radius: 50%; margin: 0 auto 30px; position: relative; border: 1px solid #222; animation: rotate 12s linear infinite; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .vinyl-record::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: var(--primary-red); border-radius: 50%; border: 3px solid #111; }
+
+        /* Rating System Styles */
+        .rating-container {
+            padding: 40px 6%;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.02);
+            margin: 20px 6%;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .rating-container h4 { margin-bottom: 15px; font-size: 1.1rem; }
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            flex-direction: row-reverse; /* لعكس الترتيب برمجياً لتسهيل الـ CSS hover */
+            gap: 10px;
+        }
+
+        .stars input { display: none; }
+
+        .stars label {
+            font-size: 2.5rem;
+            color: #333;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .stars label:before { content: '★'; }
+
+        .stars input:checked ~ label,
+        .stars label:hover,
+        .stars label:hover ~ label {
+            color: var(--star-color);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        footer { padding: 40px 6%; text-align: center; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-dim); }
+        .dev-name { color: white; text-decoration: none; font-weight: 600; }
+
+        @media (min-width: 768px) {
+            header { padding: 100px 20%; }
+            h1 { font-size: 4rem; }
+            .features { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+            .card { width: 30%; }
+            .btn-apk { width: auto; }
+            .vinyl-section { display: flex; align-items: center; text-align: left; gap: 50px; padding: 100px 15%; }
+            .vinyl-record { margin: 0; width: 280px; height: 280px; }
+            .rating-container { margin: 40px 20%; padding: 50px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow"></div>
+    
+    <nav>
+        <div class="logo">HR<span>music</span></div>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn-lang" onclick="toggleLang()" id="l-btn">English</button>
+            <a href="https://github.com/hatim22hr7" target="_blank" class="btn-lang" style="text-decoration:none">GitHub</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1 id="h-title">سكون يلامس روح الموسيقى</h1>
+        <p class="subtitle" id="h-sub">تطبيق HRmusic يعيد تدوين مفهوم مشغلات الموسيقى على أندرويد بسلاسة فائقة وبدون إعلانات.</p>
+        <a href="HRmusic.apk" class="btn-apk" id="h-btn">تحميل APK</a>
+    </header>
+
+    <section class="features">
+        <div class="card">
+            <h3 class="f-t">تصميم زجاجي</h3>
+            <p class="f-d">واجهة مستخدم ضبابية وأنيقة مستوحاة من أرقى الأنظمة العالمية.</p>
+        </div>
+        <div class="card">
+            <h3 class="f-t">تحكم L/R</h3>
+            <p class="f-d">تحكم كامل في موازنة الصوت بين القنوات بدقة هندسية عالية.</p>
+        </div>
+        <div class="card">
+            <h3 class="f-t">أداء ثابت</h3>
+            <p class="f-d">استمرار التشغيل في الخلفية حتى في ظروف استهلاك الرام العالية.</p>
+        </div>
+    </section>
+
+    <section class="vinyl-section" id="v-sec">
+        <div class="vinyl-record"></div>
+        <div>
+            <h2 id="v-t" style="margin-bottom:15px; font-size:2rem;">الأسطوانة الذكية</h2>
+            <p id="v-d" style="color:var(--text-dim)">تحول بصري مذهل يحول غلاف الأغنية إلى أسطوانة كلاسيكية دوارة بلمسة واحدة.</p>
+        </div>
+    </section>
+
+    <section class="rating-container">
+        <h4 id="r-title">قيم تجربتك مع HRmusic</h4>
+        <div class="stars">
+            <input type="radio" id="s5" name="rating" value="5"><label for="s5"></label>
+            <input type="radio" id="s4" name="rating" value="4"><label for="s4"></label>
+            <input type="radio" id="s3" name="rating" value="3"><label for="s3"></label>
+            <input type="radio" id="s2" name="rating" value="2"><label for="s2"></label>
+            <input type="radio" id="s1" name="rating" value="1"><label for="s1"></label>
+        </div>
+    </section>
+
+    <footer>
+        <p id="f-dev">تم التطوير بواسطة <a href="https://github.com/hatim22hr7" class="dev-name">Hatim Haouar</a></p>
+        <p style="margin-top:10px">&copy; 2026 HRmusic</p>
+    </footer>
+
+    <script>
+        const content = {
+            ar: {
+                lBtn: "English",
+                hTitle: "سكون يلامس روح الموسيقى",
+                hSub: "تطبيق HRmusic يعيد تدوين مفهوم مشغلات الموسيقى على أندرويد بسلاسة فائقة وبدون إعلانات.",
+                hBtn: "تحميل APK",
+                vT: "الأسطوانة الذكية",
+                vD: "تحول بصري مذهل يحول غلاف الأغنية إلى أسطوانة كلاسيكية دوارة بلمسة واحدة.",
+                rTitle: "قيم تجربتك مع HRmusic",
+                fDev: "تم التطوير بواسطة ",
+                feats: [
+                    {t: "تصميم زجاجي", d: "واجهة مستخدم ضبابية وأنيقة مستوحاة من أرقى الأنظمة العالمية."},
+                    {t: "تحكم L/R", d: "تحكم كامل في موازنة الصوت بين القنوات بدقة هندسية عالية."},
+                    {t: "أداء ثابت", d: "استمرار التشغيل في الخلفية حتى في ظروف استهلاك الرام العالية."}
+                ]
+            },
+            en: {
+                lBtn: "العربية",
+                hTitle: "Silence Touches the Soul",
+                hSub: "HRmusic redefines music playback on Android with ultra-fluidity and zero ads.",
+                hBtn: "Download APK",
+                vT: "Smart Vinyl",
+                vD: "Stunning visual transformation that turns album art into a classic spinning record.",
+                rTitle: "Rate your experience with HRmusic",
+                fDev: "Developed by ",
+                feats: [
+                    {t: "Glass Design", d: "Premium blurred UI inspired by top-tier operating systems."},
+                    {t: "L/R Control", d: "Full control over audio balancing between channels with high precision."},
+                    {t: "Stable Performance", d: "Continuous background playback even under high RAM usage."}
+                ]
+            }
+        };
+
+        let lang = 'ar';
+        function toggleLang() {
+            lang = lang === 'ar' ? 'en' : 'ar';
+            const d = content[lang];
+            document.getElementById('app-html').dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById('l-btn').innerText = d.lBtn;
+            document.getElementById('h-title').innerText = d.hTitle;
+            document.getElementById('h-sub').innerText = d.hSub;
+            document.getElementById('h-btn').innerText = d.hBtn;
+            document.getElementById('v-t').innerText = d.vT;
+            document.getElementById('v-d').innerText = d.vD;
+            document.getElementById('r-title').innerText = d.rTitle;
+            document.getElementById('f-dev').innerHTML = d.f
